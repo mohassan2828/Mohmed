@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل أكواد الاتصالات V4</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. الإعدادات العامة (التصميم المبهج) */
+        :root {
+            --color-vodafone: #e60000;
+            --color-orange: #ff6600;
+            --color-etisalat: #00a84c;
+            --color-we: #4c0099;
+            
+            --bg-light: #f4f7f6;
+            --bg-white: #ffffff;
+            --text-dark: #2d2d2d;
+            --text-light-gray: #777;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            transition: background-color 0.3s;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+        
+        /* 2. هيكل "الصفحات" الوهمية */
+        .page {
+            display: none; /* كل الصفحات مخفية افتراضياً */
+            animation: fadeIn 0.4s ease-out;
+        }
+        .page.active {
+            display: block; /* الصفحة النشطة فقط هي التي تظهر */
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 3. تصميم الصفحة الرئيسية (page-home) */
+        .main-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+        }
+
+        .operator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* تعديل كارت الشركة ليشمل اللوجو */
+        .company-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--main-color);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-bottom: 5px solid var(--main-color);
+            
+            /* خصائص Flex لتوسيط اللوجو والنص */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+            min-height: 200px;
+        }
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        /* 4. تصميم صفحات الشركات (page-company) */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .company-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--main-color);
+        }
+        .btn-back {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-back:hover {
+            background-color: #555;
+        }
+        
+        .code-category h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin: 25px 0 15px 0;
+        }
+
+        /* 5. تصميم عنصر الكود (فاتح) */
+        .code-item {
+            background: var(--bg-white);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .code-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex-grow: 1;
+        }
+        .code-name {
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+        }
+        .code-desc {
+            font-size: 0.9rem;
+            color: var(--text-light-gray);
+        }
+        .code-ussd {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.3rem;
+            color: var(--main-color);
+            font-weight: bold;
+            text-align: left;
+            direction: ltr;
+            user-select: all;
+            padding: 5px 0;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn-copy {
+            background-color: var(--main-color);
+            color: white;
+        }
+        .btn-copy:hover {
+            opacity: 0.85;
+        }
+        .btn-call {
+            background-color: transparent;
+            color: var(--main-color);
+            border: 2px solid var(--main-color);
+        }
+        .btn-call:hover {
+            background-color: var(--main-color);
+            color: white;
+        }
+
+        /* 6. إشعار النسخ (Toast) */
+        #toast-notification {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #222;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            z-index: 1000;
+            transition: all 0.4s ease-out;
+            opacity: 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        #toast-notification.show {
+            bottom: 30px;
+            opacity: 1;
+        }
+
+        /* 7. تخصيص ألوان الشركات */
+        .vodafone { --main-color: var(--color-vodafone); }
+        .orange { --main-color: var(--color-orange); }
+        .etisalat { --main-color: var(--color-etisalat); }
+        .we { --main-color: var(--color-we); }
+    </style>
+</head>
+<body>
+
+    <div id="page-home" class="page active">
+        <div class="container">
+            <h1 class="main-title">دليل أكواد الاتصالات</h1>
+            <div class="operator-grid">
+                
+                <div class="company-card vodafone" data-target="page-vodafone">
+                    <svg class="company-logo" viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M428.461 428.461C380.179 476.743 317.067 504.615 250.615 504.615C113.133 504.615 7.385 398.867 7.385 261.385C7.385 123.903 113.133 17.385 250.615 17.385C317.067 17.385 380.179 45.257 428.461 93.539L343.385 178.615C319.243 154.474 286.097 140.257 250.615 140.257C184.162 140.257 130.257 194.162 130.257 261.385C130.257 328.608 184.162 382.513 250.615 382.513C286.097 382.513 319.243 368.296 343.385 344.154L428.461 428.461Z"/>
+                    </svg>
+                    فودافون
+                </div>
+                
+                <div class="company-card orange" data-target="page-orange">
+                    <svg class="company-logo" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 3H3V21H21V3Z"/>
+                    </svg>
+                    أورانج
+                </div>
+                
+                <div class="company-card etisalat" data-target="page-etisalat">
+                    <svg class="company-logo" viewBox="0 0 256 256" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm-48-88a48 48 0 0 1 48-48v16a32 32 0 0 0 0 64h48v-16h-32a48 48 0 0 1-48-48H80a64 64 0 0 0 64 64v16a64 64 0 0 0 0-128h-16a48 48 0 0 1 0 96Z"/>
+                    </svg>
+                    اتصالات (e&)
+                </div>
+                
+                <div class="company-card we" data-target="page-we">
+                    <svg class="company-logo" viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M110.6 341.3H1.4V170.7h109.2V341.3zM301.8 170.7v170.6h109.2V170.7H301.8zM248.3 170.7H139.1v170.6h109.2V170.7zM510.6 170.7H401.4v170.6h109.2V170.7z"/>
+                    </svg>
+                    WE
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="page-vodafone" class="page vodafone">
+        <div class="container">
+            <div class="page-header">
+                <span class="company-title">فودافون</span>
+                <button class="btn-back" data-target="page-home">رجوع</button>
+            </div>
+            
+            <div class="code-list">
+                <div class="code-category">
+                    <h3>خدمات الرصيد والشحن</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">الاستعلام عن الرصيد</span><span class="code-ussd">*868*1#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*868*1#">نسخ</button><a href="tel:*868*1%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">خدمة سلفني شكراً</span><span class="code-ussd">*868*3#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*868*3#">نسخ</button><a href="tel:*868*3%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">شحن الكارت</span><span class="code-ussd">*858*...#</span><span class="code-desc">اكتب الكود متبوعاً برقم الكارت</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*858*#">نسخ</button></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">كلمني شكراً</span><span class="code-ussd">*505*...#</span><span class="code-desc">اكتب الكود متبوعاً بالرقم</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*505*#">نسخ</button></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>باقات الإنترنت والمكالمات</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">باقات فليكس</span><span class="code-ussd">*880#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*880#">نسخ</button><a href="tel:*880%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">باقات الإنترنت</span><span class="code-ussd">*2000#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*2000#">نسخ</button><a href="tel:*2000%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">معرفة استهلاك الباقة</span><span class="code-ussd">*225#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*225#">نسخ</button><a href="tel:*225%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>فودافون كاش</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">القائمة الرئيسية (كاش)</span><span class="code-ussd">*9#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*9#">نسخ</button><a href="tel:*9%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">الاستعلام عن رصيد الكاش</span><span class="code-ussd">*9*13#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*9*13#">نسخ</button><a href="tel:*9*13%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">تحويل أموال (كاش)</span><span class="code-ussd">*9*7#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*9*7#">نسخ</button><a href="tel:*9*7%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>خدمات أخرى</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">معرفة رقم الخط</span><span class="code-ussd">*878#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*878#">نسخ</button><a href="tel:*878%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">إلغاء الكول تون</span><span class="code-ussd">*055*0#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*055*0#">نسخ</button><a href="tel:*055*0%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">الاحتفاظ بالمكالمات</span><span class="code-ussd">*888*3#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*888*3#">نسخ</button><a href="tel:*888*3%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="page-orange" class="page orange">
+        <div class="container">
+            <div class="page-header">
+                <span class="company-title">أورانج</span>
+                <button class="btn-back" data-target="page-home">رجوع</button>
+            </div>
+            
+            <div class="code-list">
+                <div class="code-category">
+                    <h3>خدمات الرصيد والشحن</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">القائمة الرئيسية</span><span class="code-ussd">#100#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#100#">نسخ</button><a href="tel:%23100%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">الاستعلام عن الرصيد</span><span class="code-ussd">#100#3#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#100#3#">نسخ</button><a href="tel:%23100%233%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">خدمة سلفني</span><span class="code-ussd">#100#2#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#100#2#">نسخ</button><a href="tel:%23100%232%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">كلمني شكراً</span><span class="code-ussd">#121*...#</span><span class="code-desc">اكتب الكود متبوعاً بالرقم</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#121*#">نسخ</button></div>
+                    </div>
+                </div>
+                
+                <div class="code-category">
+                    <h3>باقات الإنترنت والمكالمات</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">باقات النت GO</span><span class="code-ussd">#100#4#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#100#4#">نسخ</button><a href="tel:%23100%234%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">معرفة استهلاك النت</span><span class="code-ussd">#136#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#136#">نسخ</button><a href="tel:%23136%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>أورنج كاش</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">القائمة الرئيسية (كاش)</span><span class="code-ussd">#115#</span><span class="code-desc">أو #7115#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#115#">نسخ</button><a href="tel:%23115%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>خدمات أخرى</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">معرفة رقم الخط</span><span class="code-ussd">#119#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#119#">نسخ</button><a href="tel:%23119%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">إلغاء الكول تون</span><span class="code-ussd">#999*0#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#999*0#">نسخ</button><a href="tel:%23999*0%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="page-etisalat" class="page etisalat">
+        <div class="container">
+            <div class="page-header">
+                <span class="company-title">اتصالات (e&)</span>
+                <button class="btn-back" data-target="page-home">رجوع</button>
+            </div>
+            
+            <div class="code-list">
+                <div class="code-category">
+                    <h3>خدمات الرصيد والشحن</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">الاستعلام عن الرصيد</span><span class="code-ussd">*888#</span><span class="code-desc">أو *555#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*888#">نسخ</button><a href="tel:*888%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">خدمة سلفني</span><span class="code-ussd">*911#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*911#">نسخ</button><a href="tel:*911%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">كلمني شكراً</span><span class="code-ussd">*111*...#</span><span class="code-desc">اكتب الكود متبوعاً بالرقم</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*111*#">نسخ</button></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>باقات الإنترنت والمكالمات</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">باقات الإنترنت</span><span class="code-ussd">*566#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*566#">نسخ</button><a href="tel:*566%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">معرفة استهلاك النت</span><span class="code-ussd">*566*1341#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*566*1341#">نسخ</button><a href="tel:*566*1341%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">باقات حكاية</span><span class="code-ussd">*689#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*689#">نسخ</button><a href="tel:*689%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>اتصالات كاش</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">القائمة الرئيسية (كاش)</span><span class="code-ussd">*777#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*777#">نسخ</button><a href="tel:*777%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">الاستعلام عن رصيد الكاش</span><span class="code-ussd">*777*4#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*777*4#">نسخ</button><a href="tel:*777*4%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>خدمات أخرى</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">معرفة رقم الخط</span><span class="code-ussd">*947#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*947#">نسخ</button><a href="tel:*947%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">إلغاء الكول تون</span><span class="code-ussd">#5*555#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="#5*555#">نسخ</button><a href="tel:%235*555%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="page-we" class="page we">
+        <div class="container">
+            <div class="page-header">
+                <span class="company-title">WE</span>
+                <button class="btn-back" data-target="page-home">رجوع</button>
+            </div>
+            
+            <div class="code-list">
+                <div class="code-category">
+                    <h3>خدمات الرصيد والشحن</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">الاستعلام عن الرصيد</span><span class="code-ussd">*550#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*550#">نسخ</button><a href="tel:*550%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">خدمة سلفني</span><span class="code-ussd">*504#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*504#">نسخ</button><a href="tel:*504%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">شحن الكارت</span><span class="code-ussd">*555*...#</span><span class="code-desc">اكتب الكود متبوعاً برقم الكارت</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*555*#">نسخ</button></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>باقات الإنترنت والمكالمات</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">باقات الإنترنت</span><span class="code-ussd">*999#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*999#">نسخ</button><a href="tel:*999%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">الاستعلام عن باقة النت</span><span class="code-ussd">*414#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*414#">نسخ</button><a href="tel:*414%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">باقات كنترول KIX</span><span class="code-ussd">*666#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*666#">نسخ</button><a href="tel:*666%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>WE Pay</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">القائمة الرئيسية (WE Pay)</span><span class="code-ussd">*92#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*92#">نسخ</button><a href="tel:*92%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+
+                <div class="code-category">
+                    <h3>خدمات أخرى</h3>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">معرفة رقم الخط</span><span class="code-ussd">*688#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*688#">نسخ</button><a href="tel:*688%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                    <div class="code-item">
+                        <div class="code-info"><span class="code-name">إلغاء الكول تون</span><span class="code-ussd">*777*0#</span></div>
+                        <div class="code-actions"><button class="btn btn-copy" data-code="*777*0#">نسخ</button><a href="tel:*777*0%23" class="btn btn-call">اتصال</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-notification"></div>
+
+    <audio id="click-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRjIAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAIAIAAAZGF0YQAAAAAA/v8/AAAAAP//AAAAAPb/DwAAAAEAAP7/EAAAAAAAAQAAAAIAAAD+/w8AAAAAAAEAAPs/DwAAAAEAAP7/EAAAAAAAAQAAAAIAAAAAAAAAAAAAAP7/AAAAAAAAAAAA//8PAAAAAAABAAAAAAAAAAAA//8PAAAAAAABAAAAAgAAAP7/DwAAAAAAAQAA/v8QAAAAAAABAAACAAAAAAAAAAD+/w8AAAABAAD+/xAAAAAAAAEAAAACAAAAAAAAAAAA//8PAAAAAAAAAQAA//8PAAAAAAABAAACAAAA/v8PAAAAAAABAP7/EAAAAAAAAQAAAAIAAAAAAAA=" type="audio/wav">
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const clickSound = document.getElementById('click-sound');
+            const toast = document.getElementById('toast-notification');
+            let toastTimer;
+
+            // 1. وظيفة تشغيل الصوت
+            function playSound() {
+                clickSound.currentTime = 0;
+                clickSound.play().catch(e => console.warn("لا يمكن تشغيل الصوت"));
+            }
+
+            // 2. وظيفة إظهار إشعار النسخ
+            function showToast(message) {
+                if (toastTimer) clearTimeout(toastTimer);
+                toast.textContent = message;
+                toast.classList.add('show');
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+
+            // 3. وظيفة التنقل بين الصفحات
+            function showPage(pageId) {
+                playSound();
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    window.scrollTo(0, 0); // الانتقال لأعلى الصفحة
+                }
+            }
+
+            // 4. ربط أزرار التنقل (في الصفحة الرئيسية)
+            document.querySelectorAll('.company-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const targetPageId = card.dataset.target;
+                    showPage(targetPageId);
+                });
+            });
+
+            // 5. ربط أزرار "رجوع"
+            document.querySelectorAll('.btn-back').forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetPageId = button.dataset.target;
+                    showPage(targetPageId);
+                });
+            });
+
+            // 6. ربط أزرار "نسخ"
+            document.querySelectorAll('.btn-copy').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    playSound();
+                    const code = button.dataset.code;
+                    navigator.clipboard.writeText(code).then(() => {
+                        showToast('تم النسخ بنجاح ✅');
+                    }).catch(err => {
+                        showToast('فشل النسخ ❌');
+                    });
+                });
+            });
+
+            // 7. ربط أزرار "اتصال" (لتشغيل الصوت فقط)
+            document.querySelectorAll('.btn-call').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    playSound();
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>
