@@ -1,226 +1,273 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تقرير فرع كفر عبده</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تقرير فرع كفر عبده - فبراير</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
 
-        :root {
-            --bg-deep: #0f172a;
-            --card-bg: #1e293b;
-            --gold: #d4af37;
-            --cyan: #00f2ff;
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-        }
+    :root {
+      --primary: #2c3e50;
+      --accent: #00b894; /* اللون الأخضر المميز */
+      --bg: #f0f3f7;
+      --white: #ffffff;
+      --blue-grad: linear-gradient(135deg, #0984e3, #74b9ff);
+      --red-grad: linear-gradient(135deg, #d63031, #ff7675);
+      --gold-grad: linear-gradient(135deg, #f39c12, #f1c40f);
+    }
 
-        /* لضمان ملء الصفحة بالكامل على الموبايل والـ PDF */
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-deep);
-        }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--bg);
+      direction: rtl;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
+    .dashboard-wrapper {
+      max-width: 1000px;
+      width: 100%;
+      background: var(--white);
+      border-radius: 40px;
+      padding: 45px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.07);
+    }
 
-        /* حاوية مرنة تملأ الشاشة وتتناسق مع الـ PDF */
-        .report-wrapper {
-            width: 100%;
-            max-width: 900px;
-            min-height: 100vh;
-            background-color: var(--bg-deep);
-            padding: 40px 25px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
+    /* Header */
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 25px;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+    .badge {
+      background: #e1f5fe;
+      color: #0288d1;
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.85em;
+      font-weight: 700;
+    }
 
-        .title-group h1 {
-            font-size: clamp(1.8em, 5vw, 2.5em);
-            margin: 0;
-            font-weight: 900;
-        }
+    .main-header h1 {
+      margin: 12px 0 5px 0;
+      font-size: 2.4em;
+      color: var(--primary);
+      font-weight: 900;
+    }
 
-        .title-group p {
-            color: var(--gold);
-            margin: 5px 0 0;
-            font-size: 1.1em;
-        }
+    .total-revenue {
+      font-size: 3.2em;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -1px;
+    }
 
-        .revenue-total {
-            text-align: left;
-        }
+    .total-revenue small { font-size: 0.4em; color: #95a5a6; }
 
-        .revenue-total span { color: var(--text-dim); display: block; font-size: 0.9em; }
-        .revenue-total strong { font-size: clamp(2em, 8vw, 3.5em); color: var(--cyan); line-height: 1; }
+    /* Stat Cards */
+    .top-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
 
-        /* شبكة الإحصائيات */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+    .stat-card {
+      padding: 25px;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: white;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
 
-        .stat-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
-        }
+    .gold { background: var(--gold-grad); }
+    .blue { background: var(--blue-grad); }
+    .red { background: var(--red-grad); }
 
-        .stat-card .label { color: var(--text-dim); font-size: 0.85em; margin-bottom: 8px; display: block; }
-        .stat-card .val { font-size: 1.4em; font-weight: 900; color: white; }
+    .stat-icon { font-size: 2.2em; }
+    .stat-content label { display: block; font-size: 0.9em; opacity: 0.85; margin-bottom: 5px; }
+    .stat-content .value { font-size: 1.7em; font-weight: 900; }
 
-        /* المحتوى الرئيسي */
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
+    /* Grid Sections */
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
 
-        .info-panel {
-            background: rgba(255,255,255,0.02);
-            padding: 25px;
-            border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
+    .glass-card {
+      background: #fdfdfd;
+      border: 1px solid #f1f1f1;
+      padding: 30px;
+      border-radius: 30px;
+    }
 
-        .panel-title {
-            color: var(--gold);
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            border-right: 4px solid var(--gold);
-            padding-right: 12px;
-        }
+    .glass-card h3 { margin-top: 0; color: var(--primary); font-size: 1.3em; margin-bottom: 25px; border-right: 5px solid var(--accent); padding-right: 12px; }
 
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.2);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 12px;
-        }
+    /* Channels */
+    .channel-row { display: flex; flex-direction: column; gap: 18px; }
+    .channel-item {
+      padding: 20px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8f9fa;
+    }
 
-        .item-row strong { color: var(--cyan); font-size: 1.2em; }
+    .dine-in { border-right: 6px solid #6c5ce7; }
+    .takeaway { border-right: 6px solid #e84393; }
 
-        /* الأقسام والبارات */
-        .dept-box { margin-bottom: 20px; }
-        .dept-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: bold; }
-        .progress { height: 10px; background: #334155; border-radius: 10px; overflow: hidden; margin-bottom: 5px; }
-        .fill { height: 100%; border-radius: 10px; }
+    .channel-info span { display: block; font-size: 0.9em; color: #7f8c8d; margin-bottom: 4px; }
+    .channel-info strong { font-size: 1.4em; color: #2d3436; }
+    .ops-count { background: white; padding: 6px 12px; border-radius: 12px; font-size: 0.85em; font-weight: bold; color: #636e72; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
 
-        footer {
-            margin-top: auto;
-            padding-top: 40px;
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 0.9em;
-        }
+    /* Departments */
+    .dept-item { margin-bottom: 22px; }
+    .dept-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--primary); }
+    .progress-bar {
+      height: 10px;
+      background: #edf2f7;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
 
-        /* تحسينات للتحويل لـ PDF */
-        @media print {
-            body { background: var(--bg-deep) !important; }
-            .report-wrapper { max-width: 100% !important; padding: 20mm !important; }
-        }
+    .progress { height: 100%; border-radius: 20px; }
+    .bar-fill { background: #34495e; }
+    .kitchen-fill { background: var(--accent); }
+    .desert-fill { background: #ff7675; }
+    .dept-amt { font-size: 0.9em; color: #95a5a6; }
 
-        /* تحسين للموبايل الصغير جداً */
-        @media (max-width: 480px) {
-            header { justify-content: center; text-align: center; }
-            .revenue-total { text-align: center; width: 100%; }
-        }
-    </style>
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #bdc3c7;
+      border-top: 1px solid #f1f1f1;
+      padding-top: 20px;
+    }
+
+    @media (max-width: 800px) {
+      .grid-container { grid-template-columns: 1fr; }
+      .main-header { flex-direction: column; text-align: center; }
+      .total-revenue { font-size: 2.5em; }
+    }
+    
+    @media print {
+      body { background: white; padding: 0; }
+      .dashboard-wrapper { box-shadow: none; width: 100%; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="report-wrapper">
-    <header>
-        <div class="title-group">
-            <h1>فرع كفر عبده</h1>
-            <p>تقرير الأداء (11 - 20 فبراير)</p>
-        </div>
-        <div class="revenue-total">
-            <span>إجمالي الإيراد</span>
-            <strong>263,327</strong>
-        </div>
-    </header>
-
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span class="label">المتوسط اليومي</span>
-            <span class="val" style="color:var(--gold)">26,332</span>
-        </div>
-        <div class="stat-card">
-            <span class="label">نسبة التكلفة</span>
-            <span class="val">43%</span>
-        </div>
-        <div class="stat-card">
-            <span class="label">الطلبيات</span>
-            <span class="val">115,649</span>
-        </div>
-        <div class="stat-card">
-            <span class="label">الهالك (0.01%)</span>
-            <span class="val" style="color:#ef4444">424</span>
-        </div>
+<div class="dashboard-wrapper">
+  <header class="main-header">
+    <div class="branch-info">
+      <span class="badge">تقرير الأداء الدوري</span>
+      <h1>فرع كفر عبده 🏠</h1>
+      <p class="date-text">الفترة من 11 إلى 20 فبراير</p>
     </div>
-
-    <div class="main-content">
-        <section class="info-panel">
-            <div class="panel-title">قنوات المبيعات</div>
-            <div class="item-row">
-                <span>داين إن (657 ع)</span>
-                <strong>145,618</strong>
-            </div>
-            <div class="item-row">
-                <span>تيك أواي (754 ع)</span>
-                <strong>109,336</strong>
-            </div>
-        </section>
-
-        <section class="info-panel">
-            <div class="panel-title">توزيع الأقسام</div>
-            <div class="dept-box">
-                <div class="dept-meta"><span>البار</span><span>64%</span></div>
-                <div class="progress"><div class="fill" style="width: 64%; background: var(--gold);"></div></div>
-                <small style="color:var(--text-dim)">150,049 ج.م</small>
-            </div>
-            <div class="dept-box">
-                <div class="dept-meta"><span>المطبخ</span><span>34%</span></div>
-                <div class="progress"><div class="fill" style="width: 34%; background: var(--cyan);"></div></div>
-                <small style="color:var(--text-dim)">79,139 ج.م</small>
-            </div>
-        </section>
+    <div class="main-stat">
+      <label>إجمالي إيراد الفترة</label>
+      <div class="total-revenue">263,327 <small>ج.م</small></div>
     </div>
+  </header>
 
-    <footer> 
-    </footer>
+  <div class="top-row">
+    <div class="stat-card gold">
+      <div class="stat-icon">📅</div>
+      <div class="stat-content">
+        <label>المتوسط اليومي</label>
+        <span class="value">26,332</span>
+      </div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-icon">🛒</div>
+      <div class="stat-content">
+        <label>إجمالي الطلبيات</label>
+        <span class="value">115,649</span>
+      </div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-icon">📉</div>
+      <div class="stat-content">
+        <label>نسبة التكلفة</label>
+        <span class="value">43%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-container">
+    <section class="glass-card">
+      <h3>📈 تحليل قنوات البيع</h3>
+      <div class="channel-row">
+        <div class="channel-item dine-in">
+          <div class="channel-info">
+            <span>الداين إن (Dine-In)</span>
+            <strong>145,618</strong>
+          </div>
+          <div class="ops-count">657 عملية</div>
+        </div>
+        <div class="channel-item takeaway">
+          <div class="channel-info">
+            <span>التيك أواي (Takeaway)</span>
+            <strong>109,336</strong>
+          </div>
+          <div class="ops-count">754 عملية</div>
+        </div>
+      </div>
+      <p style="margin-top: 20px; font-size: 0.85em; color: #d63031;">* إجمالي الهالك: 424 (0.01%)</p>
+    </section>
+
+    <section class="glass-card">
+      <h3>👨‍🍳 مبيعات الأقسام والنسب</h3>
+      <div class="dept-stats">
+        <div class="dept-item">
+          <div class="dept-info">
+            <span>البار</span>
+            <span>64%</span>
+          </div>
+          <div class="progress-bar"><div class="progress bar-fill" style="width: 64%"></div></div>
+          <span class="dept-amt">150,049 ج.م</span>
+        </div>
+        
+        <div class="dept-item">
+          <div class="dept-info">
+            <span>المطبخ</span>
+            <span>34%</span>
+          </div>
+          <div class="progress-bar"><div class="progress kitchen-fill" style="width: 34%"></div></div>
+          <span class="dept-amt">79,139 ج.م</span>
+        </div>
+
+        <div class="dept-item">
+          <div class="dept-info">
+            <span>الديزارت</span>
+            <span>2%</span>
+          </div>
+          <div class="progress-bar"><div class="progress desert-fill" style="width: 2%"></div></div>
+          <span class="dept-amt">2,683 ج.م</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+       فبراير 2026 -    ✨
+  </footer>
 </div>
 
 </body>
