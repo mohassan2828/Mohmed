@@ -2,36 +2,38 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دفتر حجوزات رمضان - Full Page Edition</title>
+    <title>دفتر حجوزات رمضان - الطباعة الكاملة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap');
 
-        /* إعدادات الصفحة للطباعة لضمان العرض الكامل */
+        /* إجبار المتصفح على مقاس A4 حقيقي */
         @page {
             size: A4;
-            margin: 0; /* إلغاء هوامش المتصفح الافتراضية */
+            margin: 0;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 210mm;
+            height: 297mm;
+            background-color: #ffffff;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
             font-family: 'Tajawal', sans-serif;
-            display: flex;
-            justify-content: center;
+            display: block;
         }
 
-        /* الحاوية الرئيسية تأخذ عرض الورقة بالكامل */
-        .page-frame {
+        /* الحاوية الرئيسية تمتد لعرض الورقة بالكامل */
+        .page-container {
             width: 210mm;
-            min-height: 297mm;
-            background: #ffffff;
-            padding: 40px; /* مساحة داخلية */
+            height: 297mm;
             box-sizing: border-box;
-            border: 25px solid #000000; /* الحواف السوداء العريضة */
+            border: 22px solid #000000; /* الحواف السوداء العريضة */
             outline: 2px solid #c5a059;
-            outline-offset: -12px;
+            outline-offset: -10px;
+            padding: 30px 40px;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -39,167 +41,168 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 3px solid #000;
-            padding-bottom: 20px;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #000;
+            padding-bottom: 15px;
         }
 
         header h1 {
             font-family: 'Amiri', serif;
-            font-size: 50px;
+            font-size: 52px;
             color: #000;
             margin: 0;
         }
 
-        .meta-info {
+        .meta-line {
             display: flex;
             justify-content: space-around;
-            margin-top: 15px;
-            font-size: 22px;
+            margin-top: 10px;
+            font-size: 24px;
             font-weight: bold;
         }
 
-        .booking-section {
+        .booking-cards {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            justify-content: space-between; /* توزيع الكارتين على طول الورقة */
+            padding: 10px 0;
         }
 
         .card {
-            border: 1px solid #eee;
+            border: 1px solid #000;
             padding: 25px;
-            position: relative;
             background: #fff;
-            border-right: 15px solid #000; /* شريط جانبي أسود */
+            border-right: 15px solid #000;
+            position: relative;
         }
 
-        .input-group {
+        .row {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .label {
             font-weight: 800;
-            font-size: 20px;
+            font-size: 22px;
             color: #000;
-            min-width: 140px;
+            min-width: 150px;
         }
 
-        .underline {
+        .line {
             flex-grow: 1;
-            border-bottom: 2px solid #333;
+            border-bottom: 2px solid #000;
             height: 25px;
         }
 
-        .order-container {
+        .order-box {
             margin-top: 20px;
             border: 2px solid #000;
             padding: 15px;
+            min-height: 220px; /* مساحة أوردر ضخمة */
         }
 
-        .order-label {
+        .order-title {
             font-weight: bold;
-            color: #000;
+            font-size: 20px;
             margin-bottom: 10px;
             display: block;
         }
 
-        .order-lines div {
-            height: 38px;
-            border-bottom: 1px solid #e0e0e0;
+        .writing-line {
+            height: 45px;
+            border-bottom: 1px solid #ccc;
         }
 
-        .card-footer {
+        .footer {
             display: flex;
             justify-content: flex-end;
             align-items: center;
             margin-top: 20px;
         }
 
-        .table-box {
-            width: 80px;
-            height: 50px;
+        .table-square {
+            width: 100px;
+            height: 60px;
             border: 4px solid #000;
-            margin-right: 10px;
+            margin-right: 15px;
         }
 
-        /* لضمان العرض الكامل عند التحويل لـ PDF */
+        /* تحسينات الطباعة */
         @media print {
-            body { background: none; }
-            .page-frame {
-                width: 210mm;
-                height: 297mm;
-                border-width: 25px !important;
-                box-shadow: none;
+            .page-container {
+                border-width: 22px !important;
+                -webkit-print-color-adjust: exact;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="page-frame">
+<div class="page-container">
     <header>
         <h1>دفتر حجوزات رمضان</h1>
-        <div class="meta-info">
-            <div>اليوم: ....................</div>
-            <div>التاريخ: ....................</div>
+        <div class="meta-line">
+            <div>اليوم: ......................</div>
+            <div>التاريخ: ......................</div>
         </div>
     </header>
 
-    <div class="booking-section">
+    <div class="booking-cards">
         <div class="card">
-            <div class="input-group">
+            <div class="row">
                 <span class="label">الاســـــم /</span>
-                <div class="underline"></div>
+                <div class="line"></div>
             </div>
-            <div class="input-group">
+            <div class="row">
                 <span class="label">رقم الموبايل /</span>
-                <div class="underline"></div>
+                <div class="line"></div>
             </div>
-            <div class="input-group">
+            <div class="row">
                 <span class="label">عدد الأفراد /</span>
-                <div class="underline"></div>
+                <div class="line"></div>
             </div>
 
-            <div class="order-container">
-                <span class="order-label">تـفاصيل الاوردر /</span>
-                <div class="order-lines">
-                    <div></div><div></div><div></div><div></div>
-                </div>
+            <div class="order-box">
+                <span class="order-title">تـفاصيل الاوردر /</span>
+                <div class="writing-line"></div>
+                <div class="writing-line"></div>
+                <div class="writing-line"></div>
+                <div class="writing-line"></div>
             </div>
 
-            <div class="card-footer">
+            <div class="footer">
                 <span class="label">رقم الترابيزة //</span>
-                <div class="table-box"></div>
+                <div class="table-square"></div>
             </div>
         </div>
 
         <div class="card">
-            <div class="input-group">
+            <div class="row">
                 <span class="label">الاســـــم /</span>
-                <div class="underline"></div>
+                <div class="line"></div>
             </div>
-            <div class="input-group">
+            <div class="row">
                 <span class="label">رقم الموبايل /</span>
-                <div class="underline"></div>
+                <div class="line"></div>
             </div>
-            <div class="input-group">
+            <div class="row">
                 <span class="label">عدد الأفراد /</span>
-                <div class="underline"></div>
+                <div class="line"></div>
             </div>
 
-            <div class="order-container">
-                <span class="order-label">تـفاصيل الاوردر /</span>
-                <div class="order-lines">
-                    <div></div><div></div><div></div><div></div>
-                </div>
+            <div class="order-box">
+                <span class="order-title">تـفاصيل الاوردر /</span>
+                <div class="writing-line"></div>
+                <div class="writing-line"></div>
+                <div class="writing-line"></div>
+                <div class="writing-line"></div>
             </div>
 
-            <div class="card-footer">
+            <div class="footer">
                 <span class="label">رقم الترابيزة //</span>
-                <div class="table-box"></div>
+                <div class="table-square"></div>
             </div>
         </div>
     </div>
