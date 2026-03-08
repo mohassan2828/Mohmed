@@ -2,187 +2,149 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>نموذج حجز رمضان - Black Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دفتر حجوزات رمضان - Full Page Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap');
 
-        :root {
-            --main-black: #000000;
-            --gold-detail: #c5a059;
-            --pure-white: #ffffff;
+        /* إعدادات الصفحة للطباعة لضمان العرض الكامل */
+        @page {
+            size: A4;
+            margin: 0; /* إلغاء هوامش المتصفح الافتراضية */
         }
 
         body {
+            margin: 0;
+            padding: 0;
             background-color: #f0f0f0;
             font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            padding: 20px;
             display: flex;
             justify-content: center;
         }
 
-        /* حاوية الورقة مع الحواف السوداء العريضة */
+        /* الحاوية الرئيسية تأخذ عرض الورقة بالكامل */
         .page-frame {
             width: 210mm;
             min-height: 297mm;
-            background: var(--pure-white);
-            padding: 45px;
+            background: #ffffff;
+            padding: 40px; /* مساحة داخلية */
             box-sizing: border-box;
-            border: 20px solid var(--main-black); /* الحواف السوداء */
-            outline: 2px solid var(--gold-detail);
+            border: 25px solid #000000; /* الحواف السوداء العريضة */
+            outline: 2px solid #c5a059;
             outline-offset: -12px;
             position: relative;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
         }
 
         header {
             text-align: center;
-            margin-bottom: 50px;
-            border-bottom: 2px solid var(--main-black);
-            padding-bottom: 25px;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 20px;
         }
 
         header h1 {
             font-family: 'Amiri', serif;
-            font-size: 55px;
-            color: var(--main-black);
+            font-size: 50px;
+            color: #000;
             margin: 0;
-            letter-spacing: 2px;
         }
 
         .meta-info {
             display: flex;
-            justify-content: center;
-            gap: 50px;
+            justify-content: space-around;
             margin-top: 15px;
-        }
-
-        .meta-info div {
             font-size: 22px;
             font-weight: bold;
-            color: var(--gold-detail);
         }
 
-        .meta-info span {
-            color: #ddd;
-            margin-right: 10px;
-        }
-
-        /* كروت الحجز */
         .booking-section {
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 30px;
         }
 
         .card {
-            border: 2px solid #eee;
-            padding: 30px;
+            border: 1px solid #eee;
+            padding: 25px;
             position: relative;
             background: #fff;
-        }
-
-        /* الشريط الجانبي الأسود لكل كارت */
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 15px;
-            background: var(--main-black);
+            border-right: 15px solid #000; /* شريط جانبي أسود */
         }
 
         .input-group {
             display: flex;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
         .label {
             font-weight: 800;
             font-size: 20px;
-            color: var(--main-black);
-            min-width: 160px;
+            color: #000;
+            min-width: 140px;
         }
 
         .underline {
             flex-grow: 1;
             border-bottom: 2px solid #333;
             height: 25px;
-            margin-right: 10px;
         }
 
-        /* منطقة الأوردر الكبيرة */
         .order-container {
-            margin-top: 30px;
-            border: 1px solid #000;
-            padding: 20px;
-            position: relative;
+            margin-top: 20px;
+            border: 2px solid #000;
+            padding: 15px;
         }
 
         .order-label {
-            position: absolute;
-            top: -15px;
-            right: 20px;
-            background: white;
-            padding: 0 10px;
             font-weight: bold;
-            color: var(--main-black);
-            font-size: 18px;
+            color: #000;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .order-lines div {
-            height: 40px;
-            border-bottom: 1px solid #f0f0f0;
+            height: 38px;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        /* الفوتر (الترابيزة) */
         .card-footer {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            margin-top: 30px;
-        }
-
-        .table-title {
-            font-weight: 900;
-            font-size: 24px;
-            margin-left: 20px;
+            margin-top: 20px;
         }
 
         .table-box {
-            width: 90px;
-            height: 60px;
-            border: 4px solid var(--main-black);
-            border-radius: 4px;
+            width: 80px;
+            height: 50px;
+            border: 4px solid #000;
+            margin-right: 10px;
         }
 
-        /* أيقونة رمضانية هادئة */
-        .moon-logo {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            font-size: 40px;
-            color: var(--gold-detail);
-        }
-
+        /* لضمان العرض الكامل عند التحويل لـ PDF */
         @media print {
-            body { background: none; padding: 0; }
-            .page-frame { margin: 0; border-width: 25px; box-shadow: none; }
+            body { background: none; }
+            .page-frame {
+                width: 210mm;
+                height: 297mm;
+                border-width: 25px !important;
+                box-shadow: none;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="page-frame">
-    <div class="moon-logo">🌙</div>
-    
     <header>
-        <h1> حجوزات رمضان</h1>
+        <h1>دفتر حجوزات رمضان</h1>
         <div class="meta-info">
-            <div>اليوم: <span>..................</span></div>
-            <div>التاريخ: <span>..................</span></div>
+            <div>اليوم: ....................</div>
+            <div>التاريخ: ....................</div>
         </div>
     </header>
 
@@ -204,12 +166,12 @@
             <div class="order-container">
                 <span class="order-label">تـفاصيل الاوردر /</span>
                 <div class="order-lines">
-                    <div></div><div></div><div></div><div></div><div></div>
+                    <div></div><div></div><div></div><div></div>
                 </div>
             </div>
 
             <div class="card-footer">
-                <span class="table-title">رقم الترابيزة //</span>
+                <span class="label">رقم الترابيزة //</span>
                 <div class="table-box"></div>
             </div>
         </div>
@@ -231,12 +193,12 @@
             <div class="order-container">
                 <span class="order-label">تـفاصيل الاوردر /</span>
                 <div class="order-lines">
-                    <div></div><div></div><div></div><div></div><div></div>
+                    <div></div><div></div><div></div><div></div>
                 </div>
             </div>
 
             <div class="card-footer">
-                <span class="table-title">رقم الترابيزة //</span>
+                <span class="label">رقم الترابيزة //</span>
                 <div class="table-box"></div>
             </div>
         </div>
