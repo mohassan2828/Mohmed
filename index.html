@@ -2,265 +2,214 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>تصميم حجوزات رمضان الجرافيكي الخرافي</title>
+    <title>حجوزات رمضان - مساحة طلبات واسعة</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@700&family=Tajawal:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Tajawal:wght@500;800&display=swap');
 
-        /* تصفير الهوامش لضمان ملء الورقة */
         @page { size: A4; margin: 0; }
 
         body {
             margin: 0; padding: 0;
             width: 210mm; height: 297mm;
-            background-color: #000; /* الحواف السوداء العريضة المدمجة */
+            background-color: #000;
             font-family: 'Tajawal', sans-serif;
             display: flex; justify-content: center; align-items: center;
             -webkit-print-color-adjust: exact;
         }
 
-        /* الحاوية الرئيسية تمتد لعرض الورقة */
-        .graphic-canvas {
-            width: 202mm; height: 289mm;
+        .main-canvas {
+            width: 202mm; height: 290mm;
             background: #fff;
-            padding: 10px 30px;
+            padding: 10px 25px;
             box-sizing: border-box;
-            border: 2px solid #c5a059; /* إطار ذهبي رفيع للشياكة */
-            position: relative;
+            border: 2px solid #c5a059;
             display: flex; flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* زخرفة خلفية هندسية خفيفة جداً */
-        .graphic-canvas::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png');
-            opacity: 0.05; pointer-events: none;
         }
 
         header {
-            text-align: center; margin-bottom: 5px; position: relative;
-            border-bottom: 3px double #c5a059; padding-bottom: 5px; z-index: 10;
+            text-align: center;
+            border-bottom: 3px double #000;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         header h1 {
-            font-family: 'Reem Kufi', sans-serif; font-size: 45px;
-            color: #1a1a1a; margin: 0; text-shadow: 1px 1px 2px #c5a059;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 45px;
+            margin: 0;
+            color: #000;
         }
 
         .header-meta {
-            display: flex; justify-content: center; gap: 40px;
-            font-weight: bold; font-size: 19px; color: #555; margin-top: 5px;
+            display: flex; justify-content: space-around;
+            font-weight: 800; font-size: 18px; color: #555;
         }
-
-        .header-meta span { color: #ddd; margin-right: 5px; }
 
         .cards-area {
-            flex-grow: 1; display: flex; flex-direction: column;
-            justify-content: space-between; padding: 5px 0; z-index: 10;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        /* تصميم الكارت الجرافيكي المائل */
-        .modern- منشور {
-            background: #ffffff;
-            border: 2px solid #eee;
-            border-right: 18px solid #000; /* الشريط الأسود الجانبي الفخم */
-            padding: 10px 20px;
-            height: 30%; /* لضمان استيعاب 3 كروت في ورقة واحدة */
+        .pro-card {
+            height: 30%; /* استغلال مساحة أكبر لكل كارت */
+            border: 2px solid #000;
+            border-right: 20px solid #000;
+            padding: 12px 20px;
+            display: flex;
+            flex-direction: column;
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            display: flex; flex-direction: column; justify-content: space-between;
-            overflow: hidden;
+            background: #fff;
         }
 
-        /* رسمة جرافيكية مائلة في خلفية كل كارت بالـ CSS */
-        . منشور::after {
-            content: ""; position: absolute; top: 0; right: 0; width: 40%; height: 100%;
-            background: linear-gradient(135deg, transparent 70%, rgba(197, 160, 89, 0.1) 70%, rgba(197, 160, 89, 0.1) 80%, transparent 80%);
-            pointer-events: none;
+        .info-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 0.8fr;
+            gap: 15px;
+            margin-bottom: 10px;
         }
 
-        /* الأيقونات الـ Vector المرسومة */
-        .vector-label {
-            display: flex; align-items: center; gap: 10px;
-            font-weight: 800; font-size: 18px; color: #000;
+        .input-item {
+            border-bottom: 2px solid #eee;
         }
 
-        .field-row { display: flex; align-items: center; margin-bottom: 5px; }
-        .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-        .line-fill {
-            flex-grow: 1; border-bottom: 2px solid #000; height: 18px;
-            background: linear-gradient(to left, #fff, #f9f9f9);
+        .input-item label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #c5a059;
+            display: block;
         }
 
-        /* رسم الأيقونات بالـ CSS */
-        .icon { width: 22px; height: 22px; display: inline-block; position: relative; }
-        
-        /* أيقونة الاسم - شخص مبسط */
-        .icon-user {
-            border: 2px solid #c5a059; border-radius: 50%;
-            height: 12px; width: 12px; left: 5px; top: -1px;
-        }
-        .icon-user::after {
-            content: ""; position: absolute; bottom: -8px; left: -4px;
-            width: 20px; height: 10px; border: 2px solid #c5a059;
-            border-radius: 10px 10px 0 0;
+        .input-item div { height: 22px; }
+
+        /* منطقة الطلبات الكبيرة */
+        .order-mega-zone {
+            flex-grow: 1; /* تأخذ كل المساحة المتبقية في الكارت */
+            border: 1.5px solid #000;
+            background: #fdfdfd;
+            margin: 5px 0;
+            position: relative;
+            padding: 8px;
         }
 
-        /* أيقونة الموبايل - سماعة مبسطة */
-        .icon-phone {
-            width: 18px; height: 22px; border: 2px solid #c5a059;
-            border-radius: 4px; left: 2px;
-        }
-        .icon-phone::after {
-            content: ""; position: absolute; bottom: 2px; left: 4px;
-            width: 10px; height: 2px; background: #c5a059;
-        }
-
-        /* أيقونة العدد - مجموعة أشخاص مبسطة */
-        .icon-group {
-            width: 25px; height: 22px;
-            border-bottom: 2px solid #c5a059;
-        }
-        .icon-group::before {
-            content: "👥"; position: absolute; font-size: 16px; color: #c5a059;
-            top: -2px; left: -2px;
-        }
-        .icon-group::after {
-            content: ""; position: absolute; font-size: 16px; color: #c5a059;
-            top: -2px; left: 10px;
+        .order-label {
+            position: absolute;
+            top: -12px; right: 15px;
+            background: #000; color: #fff;
+            padding: 2px 15px;
+            font-size: 12px; font-weight: bold;
+            border-radius: 5px;
         }
 
-        /* مساحة الأوردر الجرافيكية المدمجة للـ 3 كروت */
-        .order-zone {
-            border: 2px solid #c5a059; background: #fffdfa;
-            padding: 8px; border-radius: 4px; margin: 5px 0;
-            position: relative; height: 60px;
+        .writing-lines {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .order-tag {
-            position: absolute; top: -8px; right: 15px;
-            background: #c5a059; color: #fff; padding: 2px 10px;
-            font-size: 13px; border-radius: 10px; font-weight: bold;
+        .writing-lines div {
+            flex-grow: 1;
+            border-bottom: 1px dashed #ccc;
         }
 
-        .order-lines div { height: 28px; border-bottom: 1px dashed #e0e0e0; }
-
-        .footer {
-            display: flex; justify-content: flex-end; align-items: center;
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
         }
 
-        .table-badge {
-            display: flex; align-items: center; gap: 8px;
-            font-weight: 900; font-size: 19px; color: #000;
+        .table-tag {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            font-size: 18px;
         }
 
-        .table-input {
-            width: 70px; height: 35px; border: 3px solid #000;
-            background: #fff; position: relative;
+        .table-square {
+            width: 70px;
+            height: 38px;
+            border: 3px solid #c5a059;
+            background: #fff;
         }
 
-        /* رسم زخرفة في زاوية كل كارت بالـ CSS */
-        .card-corner-pattern {
-            position: absolute; top: 0; left: 0; width: 15px; height: 15px;
-            border-top: 2px solid #c5a059; border-left: 2px solid #c5a059;
-            border-radius: 2px 0 0 0; opacity: 0.2;
-        }
+        .ramadan-icon { font-size: 20px; color: #c5a059; }
 
     </style>
 </head>
 <body>
 
-<div class="graphic-canvas">
+<div class="main-canvas">
     <header>
-        <h1>حجوزات رمضان 🌙</h1>
+        <h1>حجوزات رمضـان</h1>
         <div class="header-meta">
-            <div>اليوم: <span>.........................</span></div>
-            <div>التاريخ: <span>.........................</span></div>
+            <div>اليوم: ....................</div>
+            <div>التاريخ: ....................</div>
         </div>
     </header>
 
     <div class="cards-area">
-        <div class="modern- منشور">
-            <div class="card-corner-pattern"></div>
-            <div class="field-row">
-                <span class="vector-label"><i class="icon icon-user"></i> الاسم:</span>
-                <div class="line-fill"></div>
+        <div class="pro-card">
+            <div class="info-row">
+                <div class="input-item"><label>الاســـــــــم</label><div></div></div>
+                <div class="input-item"><label>الموبايل</label><div></div></div>
+                <div class="input-item"><label>الأفراد</label><div></div></div>
             </div>
-            <div class="field-grid">
-                <div class="field-row">
-                    <span class="vector-label"><i class="icon icon-phone"></i> الموبايل:</span>
-                    <div class="line-fill"></div>
-                </div>
-                <div class="field-row">
-                    <span class="vector-label"><i class="icon icon-group"></i> العدد:</span>
-                    <div class="line-fill"></div>
+            <div class="order-mega-zone">
+                <span class="order-label">تـفـاصـيـل الـطـلـبـات</span>
+                <div class="writing-lines">
+                    <div></div><div></div><div></div><div></div>
                 </div>
             </div>
-            <div class="order-zone">
-                <span class="order-tag">الطلبات</span>
-                <div class="order-lines"><div></div><div></div></div>
-            </div>
-            <div class="footer">
-                <div class="table-badge">
-                    <span>الترابيزة //</span>
-                    <div class="table-input"></div>
+            <div class="card-footer">
+                <span class="ramadan-icon">🌙 رمضان كريم</span>
+                <div class="table-tag">
+                    <span>رقم الطاولة //</span>
+                    <div class="table-square"></div>
                 </div>
             </div>
         </div>
 
-        <div class="modern- منشور">
-            <div class="card-corner-pattern"></div>
-            <div class="field-row">
-                <span class="vector-label"><i class="icon icon-user"></i> الاسم:</span>
-                <div class="line-fill"></div>
+        <div class="pro-card">
+            <div class="info-row">
+                <div class="input-item"><label>الاســـــــــم</label><div></div></div>
+                <div class="input-item"><label>الموبايل</label><div></div></div>
+                <div class="input-item"><label>الأفراد</label><div></div></div>
             </div>
-            <div class="field-grid">
-                <div class="field-row">
-                    <span class="vector-label"><i class="icon icon-phone"></i> الموبايل:</span>
-                    <div class="line-fill"></div>
-                </div>
-                <div class="field-row">
-                    <span class="vector-label"><i class="icon icon-group"></i> العدد:</span>
-                    <div class="line-fill"></div>
+            <div class="order-mega-zone">
+                <span class="order-label">تـفـاصـيـل الـطـلـبـات</span>
+                <div class="writing-lines">
+                    <div></div><div></div><div></div><div></div>
                 </div>
             </div>
-            <div class="order-zone">
-                <span class="order-tag">الطلبات</span>
-                <div class="order-lines"><div></div><div></div></div>
-            </div>
-            <div class="footer">
-                <div class="table-badge">
-                    <span>الترابيزة //</span>
-                    <div class="table-input"></div>
+            <div class="card-footer">
+                <span class="ramadan-icon">🌙 رمضان كريم</span>
+                <div class="table-tag">
+                    <span>رقم الطاولة //</span>
+                    <div class="table-square) "></div>
                 </div>
             </div>
         </div>
 
-        <div class="modern- منشور">
-            <div class="card-corner-pattern"></div>
-            <div class="field-row">
-                <span class="vector-label"><i class="icon icon-user"></i> الاسم:</span>
-                <div class="line-fill"></div>
+        <div class="pro-card">
+            <div class="info-row">
+                <div class="input-item"><label>الاســـــــــم</label><div></div></div>
+                <div class="input-item"><label>الموبايل</label><div></div></div>
+                <div class="input-item"><label>الأفراد</label><div></div></div>
             </div>
-            <div class="field-grid">
-                <div class="field-row">
-                    <span class="vector-label"><i class="icon icon-phone"></i> الموبايل:</span>
-                    <div class="line-fill"></div>
-                </div>
-                <div class="field-row">
-                    <span class="vector-label"><i class="icon icon-group"></i> العدد:</span>
-                    <div class="line-fill"></div>
+            <div class="order-mega-zone">
+                <span class="order-label">تـفـاصـيـل الـطـلـبـات</span>
+                <div class="writing-lines">
+                    <div></div><div></div><div></div><div></div>
                 </div>
             </div>
-            <div class="order-zone">
-                <span class="order-tag">الطلبات</span>
-                <div class="order-lines"><div></div><div></div></div>
-            </div>
-            <div class="footer">
-                <div class="table-badge">
-                    <span>الترابيزة //</span>
-                    <div class="table-input"></div>
+            <div class="card-footer">
+                <span class="ramadan-icon">🌙 رمضان كريم</span>
+                <div class="table-tag">
+                    <span>رقم الطاولة //</span>
+                    <div class="table-square"></div>
                 </div>
             </div>
         </div>
